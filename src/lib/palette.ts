@@ -28,6 +28,10 @@ export type RoomPalette = {
   accent: string;
   /** Plant foliage colour. */
   foliage: string;
+  /** Rug colour. */
+  rug: string;
+  /** Rug border colour. */
+  rugTrim: string;
   /** Screen glow colour. */
   screen: string;
   /** How strong the lamp is relative to the scene. */
@@ -50,6 +54,8 @@ export const roomPalettes: Record<RoomTheme, RoomPalette> = {
     furniture: "#262a38",
     accent: "#f0a35e",
     foliage: "#4a6b52",
+    rug: "#2e2a3a",
+    rugTrim: "#463b4d",
     screen: "#8fb8d9",
     lampIntensity: 26,
     windowIntensity: 3.2,
@@ -59,16 +65,18 @@ export const roomPalettes: Record<RoomTheme, RoomPalette> = {
     background: "#c3cad6",
     ambient: "#dfe6f2",
     lamp: "#ffc98a",
-    window: "#f2f6ff",
-    wall: "#d9dde6",
+    window: "#eef4ff",
+    wall: "#d3d8e2",
     floor: "#8b6a4e",
     desk: "#6b4a33",
     furniture: "#9aa3b4",
     accent: "#e08f42",
     foliage: "#5d8560",
+    rug: "#4b4658",
+    rugTrim: "#6b6478",
     screen: "#5f8fb8",
     lampIntensity: 8,
-    windowIntensity: 12,
-    ambientIntensity: 1.5,
+    windowIntensity: 4.5,
+    ambientIntensity: 1.15,
   },
 };

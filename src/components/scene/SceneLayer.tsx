@@ -62,7 +62,7 @@ export function SceneLayer() {
           gl.toneMapping = THREE.ACESFilmicToneMapping;
           gl.toneMappingExposure = 1.05;
           scene.background = new THREE.Color(palette.background);
-          scene.fog = new THREE.Fog(palette.background, 9, 24);
+          scene.fog = new THREE.Fog(palette.background, 14, 34);
         }}
       >
         <Suspense fallback={null}>
@@ -74,8 +74,7 @@ export function SceneLayer() {
           <Shelf palette={palette} />
           <Plant palette={palette} />
           <ServerRack palette={palette} />
-        </Suspense>
-      </Canvas>
+        </Suspense>      </Canvas>
     </div>
   );
 }

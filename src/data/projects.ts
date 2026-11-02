@@ -30,8 +30,8 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    slug: "blitz",
-    name: "Blitz",
+    slug: "clien",
+    name: "Clien",
     category: "bots",
     year: "2025",
     summary:
@@ -230,8 +230,8 @@ export const projects: Project[] = [
     icon: "rust",
   },
   {
-    slug: "zyncx-admin",
-    name: "ZYNCX Admin",
+    slug: "zyncx",
+    name: "ZYNCX",
     category: "web",
     year: "2024",
     summary:
@@ -290,21 +290,6 @@ export const projects: Project[] = [
     icon: "discorddotjs",
   },
   {
-    slug: "dns-lookup",
-    name: "dns_lookup.py",
-    category: "tools",
-    year: "2024",
-    summary:
-      "Termux DNS tool that enumerates subdomains through crt.sh, written for a phone without root.",
-    highlights: [
-      "Subdomain enumeration via crt.sh",
-      "Runs on Termux on Android",
-      "Single file, no dependencies to install",
-    ],
-    stack: ["Python", "Termux"],
-    icon: "python",
-  },
-  {
     slug: "vanity-url",
     name: "Vanity URL Checker",
     category: "tools",
@@ -332,6 +317,38 @@ export const projects: Project[] = [
       "Scripted pacing and motion",
     ],
     stack: ["Motion", "PHP", "Security"],
+  },
+  {
+    slug: "syncxesports",
+    name: "SyncxEsports",
+    category: "web",
+    year: "2026",
+    summary:
+      "Esports organization site I built and shipped, live on its own domain.",
+    highlights: [
+      "Live at syncxesports.live",
+      "Next.js App Router build",
+      "Holds up down to small screens",
+    ],
+    stack: ["Next.js", "React"],
+    icon: "nextdotjs",
+    link: { label: "syncxesports.live", href: "https://syncxesports.live/" },
+  },
+  {
+    slug: "tejmediaworks",
+    name: "TEJ Media Works",
+    category: "web",
+    year: "2026",
+    summary:
+      "Marketing site I built for TEJ Media, a done-for-you digital product partner for YouTube, Instagram, and TikTok creators.",
+    highlights: [
+      "Zero-investment partnership model explained end to end",
+      "Process, comparison, and FAQ sections",
+      "Live at tejmediaworks.com",
+    ],
+    stack: ["Next.js", "React", "Tailwind"],
+    icon: "nextdotjs",
+    link: { label: "tejmediaworks.com", href: "https://tejmediaworks.com" },
   },
 ];
 

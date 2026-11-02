@@ -188,5 +188,5 @@ export const statSlots = [
   { id: "servers", label: "Servers hosted", value: null as number | null, suffix: "" },
   { id: "users", label: "Users served", value: null as number | null, suffix: "" },
   { id: "uptime", label: "Uptime", value: null as number | null, suffix: "%" },
-  { id: "projects", label: "Projects shipped", value: 21, suffix: "" },
+  { id: "projects", label: "Projects shipped", value: 22, suffix: "" },
 ];

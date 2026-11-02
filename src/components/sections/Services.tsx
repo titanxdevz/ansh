@@ -11,7 +11,9 @@ export function Services() {
       data-scene-chapter
       className="relative flex min-h-[100dvh] items-center py-24 sm:py-32"
     >
-      <div className="mx-auto w-full max-w-[1400px] px-5 sm:px-8">
+      <div className="scrim" aria-hidden="true" />
+
+      <div className="relative mx-auto w-full max-w-[1400px] px-5 sm:px-8">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-20">
           <Reveal>
             <div className="lg:sticky lg:top-28">

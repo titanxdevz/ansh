@@ -117,6 +117,21 @@
     box-shadow: var(--shadow);
   }
 
+  /* A readable bed for text that sits over the 3D room.
+     The lamp in the scene is genuinely bright, so the scrim has to be
+     dense enough that near-white body copy keeps its contrast over it. */
+  .scrim {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--bg) 97%, transparent) 0%,
+      color-mix(in srgb, var(--bg) 94%, transparent) 45%,
+      color-mix(in srgb, var(--bg) 97%, transparent) 100%
+    );
+  }
+
   .surface-flat {
     background-color: var(--panel);
     border: 1px solid var(--line);

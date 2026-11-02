@@ -16,7 +16,8 @@ import type { RoomPalette } from "@/lib/palette";
 export function Room({ palette }: { palette: RoomPalette }) {
   const floorRef = useRef<THREE.Mesh>(null);
 
-  // Subtle floor grain. A canvas texture keeps this dependency free.
+  // Subtle floor grain. Kept in greyscale so the material colour decides
+  // the hue, and the map only adds texture on top.
   const floorTexture = useMemo(() => {
     const size = 256;
     const canvas = document.createElement("canvas");
@@ -24,19 +25,21 @@ export function Room({ palette }: { palette: RoomPalette }) {
     canvas.height = size;
     const ctx = canvas.getContext("2d")!;
 
-    ctx.fillStyle = palette.floor;
+    ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, size, size);
 
     for (let i = 0; i < 2600; i += 1) {
       const x = Math.random() * size;
       const y = Math.random() * size;
-      const shade = Math.random() * 0.06;
-      ctx.fillStyle = `rgba(255,255,255,${shade * 0.5})`;
+      const shade = 0.86 + Math.random() * 0.14;
+      ctx.fillStyle = `rgba(${Math.round(shade * 255)},${Math.round(shade * 255)},${Math.round(
+        shade * 255,
+      )},1)`;
       ctx.fillRect(x, y, 1.5, 1.5);
     }
 
     // Plank seams.
-    ctx.strokeStyle = "rgba(0,0,0,0.28)";
+    ctx.strokeStyle = "rgba(0,0,0,0.22)";
     ctx.lineWidth = 1.5;
     for (let i = 0; i < 8; i += 1) {
       const y = (i * size) / 8;
@@ -52,7 +55,7 @@ export function Room({ palette }: { palette: RoomPalette }) {
     texture.repeat.set(4, 4);
     texture.colorSpace = THREE.SRGBColorSpace;
     return texture;
-  }, [palette.floor]);
+  }, []);
 
   useFrame(() => {
     if (floorRef.current) {
@@ -80,47 +83,66 @@ export function Room({ palette }: { palette: RoomPalette }) {
         <meshStandardMaterial color={palette.wall} roughness={0.95} />
       </mesh>
 
-      {/* Left wall with a window opening built from four panels */}
+      {/* Left wall, built as four panels that frame a real window opening */}
       <group position={[-4.2, 0, 0]}>
-        <mesh position={[0, 1.15, 0]} rotation={[0, Math.PI / 2, 0]} receiveShadow>
-          <planeGeometry args={[6.8, 2.3]} />
+        {/* Below the window */}
+        <mesh position={[0, 0.75, 0]} rotation={[0, Math.PI / 2, 0]} receiveShadow>
+          <planeGeometry args={[6.8, 1.5]} />
           <meshStandardMaterial color={palette.wall} roughness={0.95} />
         </mesh>
-        <mesh position={[0, 4.05, 0]} rotation={[0, Math.PI / 2, 0]} receiveShadow>
-          <planeGeometry args={[6.8, 2.7]} />
+        {/* Above the window */}
+        <mesh position={[0, 4.6, 0]} rotation={[0, Math.PI / 2, 0]} receiveShadow>
+          <planeGeometry args={[6.8, 1.6]} />
           <meshStandardMaterial color={palette.wall} roughness={0.95} />
         </mesh>
-        <mesh position={[0, 2.6, -2.6]} rotation={[0, Math.PI / 2, 0]} receiveShadow>
-          <planeGeometry args={[1.6, 2.3]} />
+        {/* Behind the window, towards the back of the room */}
+        <mesh position={[0, 2.65, -2.55]} rotation={[0, Math.PI / 2, 0]} receiveShadow>
+          <planeGeometry args={[1.7, 2.3]} />
           <meshStandardMaterial color={palette.wall} roughness={0.95} />
         </mesh>
-        <mesh position={[0, 2.6, 2.6]} rotation={[0, Math.PI / 2, 0]} receiveShadow>
-          <planeGeometry args={[1.6, 2.3]} />
+        {/* Behind the window, towards the front of the room */}
+        <mesh position={[0, 2.65, 2.55]} rotation={[0, Math.PI / 2, 0]} receiveShadow>
+          <planeGeometry args={[1.7, 2.3]} />
           <meshStandardMaterial color={palette.wall} roughness={0.95} />
         </mesh>
 
-        {/* Window glass: the cool counter-light to the warm lamp */}
-        <mesh position={[0.02, 2.6, 0]} rotation={[0, Math.PI / 2, 0]}>
-          <planeGeometry args={[3.55, 2.3]} />
+        {/* The view outside, set back in the wall so the opening has depth */}
+        <mesh position={[-0.14, 2.65, 0]} rotation={[0, Math.PI / 2, 0]}>
+          <planeGeometry args={[3.4, 2.3]} />
           <meshStandardMaterial
             color={palette.window}
             emissive={palette.window}
-            emissiveIntensity={0.9}
-            roughness={0.1}
-            metalness={0.1}
-            transparent
-            opacity={0.92}
+            emissiveIntensity={0.28}
+            roughness={0.15}
+            metalness={0.05}
           />
         </mesh>
 
-        {/* Window frame */}
-        <group position={[0.06, 2.6, 0]}>
-          <mesh>
-            <boxGeometry args={[0.08, 2.42, 0.09]} />
+        {/* Window frame and mullions */}
+        <group position={[-0.05, 2.65, 0]}>
+          <mesh position={[0, 1.17, 0]}>
+            <boxGeometry args={[0.1, 0.09, 3.5]} />
             <meshStandardMaterial color={palette.furniture} roughness={0.6} />
           </mesh>
+          <mesh position={[0, -1.17, 0]}>
+            <boxGeometry args={[0.1, 0.09, 3.5]} />
+            <meshStandardMaterial color={palette.furniture} roughness={0.6} />
+          </mesh>
+          <mesh position={[0, 0, -1.74]}>
+            <boxGeometry args={[0.1, 2.4, 0.09]} />
+            <meshStandardMaterial color={palette.furniture} roughness={0.6} />
+          </mesh>
+          <mesh position={[0, 0, 1.74]}>
+            <boxGeometry args={[0.1, 2.4, 0.09]} />
+            <meshStandardMaterial color={palette.furniture} roughness={0.6} />
+          </mesh>
+          {/* Central vertical mullion and one cross bar */}
           <mesh>
-            <boxGeometry args={[0.08, 0.09, 3.65]} />
+            <boxGeometry args={[0.08, 2.3, 0.07]} />
+            <meshStandardMaterial color={palette.furniture} roughness={0.6} />
+          </mesh>
+          <mesh position={[0, 0.2, 0]}>
+            <boxGeometry args={[0.07, 0.06, 3.4]} />
             <meshStandardMaterial color={palette.furniture} roughness={0.6} />
           </mesh>
         </group>
@@ -129,11 +151,11 @@ export function Room({ palette }: { palette: RoomPalette }) {
       {/* Rug, a soft anchor in the middle of the floor */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0.3, 0.001, 0.4]} receiveShadow>
         <circleGeometry args={[1.85, 48]} />
-        <meshStandardMaterial color="#2e2a3a" roughness={1} />
+        <meshStandardMaterial color={palette.rug} roughness={1} />
       </mesh>
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0.3, 0.004, 0.4]} receiveShadow>
         <ringGeometry args={[1.55, 1.72, 48]} />
-        <meshStandardMaterial color="#463b4d" roughness={1} />
+        <meshStandardMaterial color={palette.rugTrim} roughness={1} />
       </mesh>
     </group>
   );
@@ -211,39 +233,63 @@ export function Desk({ palette }: { palette: RoomPalette }) {
         <meshStandardMaterial color="#1c1f2b" roughness={0.55} />
       </mesh>
 
-      {/* Desk lamp: the warm key light of the whole room */}
+      {/* Desk lamp: the warm key light of the whole room.
+          Built as a base, a lower arm and an upper arm, with the shade
+          clamped to the end of the upper arm so nothing floats. */}
       <group position={[1.12, 0.83, -0.28]}>
+        {/* Base */}
         <mesh castShadow>
-          <cylinderGeometry args={[0.16, 0.18, 0.05, 20]} />
-          <meshStandardMaterial color={palette.furniture} roughness={0.45} metalness={0.5} />
+          <cylinderGeometry args={[0.17, 0.19, 0.05, 24]} />
+          <meshStandardMaterial color={palette.furniture} roughness={0.42} metalness={0.55} />
         </mesh>
-        <mesh position={[0, 0.28, 0]} rotation={[0, 0, -0.32]} castShadow>
-          <cylinderGeometry args={[0.028, 0.028, 0.58, 12]} />
-          <meshStandardMaterial color={palette.furniture} roughness={0.4} metalness={0.55} />
-        </mesh>
-        <group position={[-0.18, 0.52, 0]} rotation={[0, 0, 0.75]}>
-          <mesh ref={lampShade} castShadow>
-            <coneGeometry args={[0.21, 0.26, 24, 1, true]} />
-            <meshStandardMaterial
-              color={palette.lamp}
-              emissive={palette.lamp}
-              emissiveIntensity={1.6}
-              roughness={0.5}
-              side={THREE.DoubleSide}
-            />
+        {/* Lower arm, leaning back towards the wall */}
+        <group rotation={[0.26, 0, 0]}>
+          <mesh position={[0, 0.26, 0]} castShadow>
+            <cylinderGeometry args={[0.026, 0.026, 0.52, 12]} />
+            <meshStandardMaterial color={palette.furniture} roughness={0.38} metalness={0.6} />
           </mesh>
-          <pointLight
-            ref={lampGlow}
-            position={[0, -0.14, 0]}
-            color={palette.lamp}
-            intensity={palette.lampIntensity}
-            distance={7.5}
-            decay={2}
-            castShadow
-            shadow-mapSize-width={512}
-            shadow-mapSize-height={512}
-            shadow-bias={-0.004}
-          />
+          {/* Elbow */}
+          <mesh position={[0, 0.52, 0]} castShadow>
+            <sphereGeometry args={[0.045, 12, 10]} />
+            <meshStandardMaterial color={palette.furniture} roughness={0.38} metalness={0.6} />
+          </mesh>
+          {/* Upper arm, reaching forward over the desk */}
+          <group position={[0, 0.52, 0]} rotation={[-0.62, 0, 0]}>
+            <mesh position={[0, 0.2, 0]} castShadow>
+              <cylinderGeometry args={[0.024, 0.024, 0.42, 12]} />
+              <meshStandardMaterial color={palette.furniture} roughness={0.38} metalness={0.6} />
+            </mesh>
+            {/* Shade hangs from the end of the upper arm */}
+            <group position={[0, 0.42, 0]} rotation={[0.62, 0, 0]}>
+              <mesh ref={lampShade} position={[0, -0.1, 0]} castShadow>
+                <coneGeometry args={[0.2, 0.24, 24, 1, true]} />
+                <meshStandardMaterial
+                  color={palette.lamp}
+                  emissive={palette.lamp}
+                  emissiveIntensity={1.6}
+                  roughness={0.5}
+                  side={THREE.DoubleSide}
+                />
+              </mesh>
+              {/* Bulb */}
+              <mesh position={[0, -0.16, 0]}>
+                <sphereGeometry args={[0.055, 12, 10]} />
+                <meshStandardMaterial
+                  color={palette.lamp}
+                  emissive={palette.lamp}
+                  emissiveIntensity={3.2}
+                />
+              </mesh>
+              <pointLight
+                ref={lampGlow}
+                position={[0, -0.2, 0]}
+                color={palette.lamp}
+                intensity={palette.lampIntensity}
+                distance={7.5}
+                decay={2}
+              />
+            </group>
+          </group>
         </group>
       </group>
 
@@ -404,13 +450,16 @@ export function Lighting({ palette }: { palette: RoomPalette }) {
         color={palette.window}
         intensity={palette.windowIntensity}
         castShadow
-        shadow-mapSize-width={1024}
-        shadow-mapSize-height={1024}
+        shadow-mapSize-width={2048}
+        shadow-mapSize-height={2048}
         shadow-camera-left={-8}
         shadow-camera-right={8}
         shadow-camera-top={8}
         shadow-camera-bottom={-8}
-        shadow-bias={-0.002}
+        shadow-camera-near={0.5}
+        shadow-camera-far={20}
+        shadow-bias={-0.0005}
+        shadow-normalBias={0.03}
       />
       {/* Soft bounce so the shadow side is never black */}
       <pointLight position={[2.6, 1.6, 2.4]} color={palette.ambient} intensity={night ? 4 : 7} distance={11} decay={2} />

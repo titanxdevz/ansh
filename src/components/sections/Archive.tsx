@@ -73,7 +73,9 @@ export function Archive() {
       data-scene-chapter
       className="relative flex min-h-[100dvh] items-center py-24 sm:py-32"
     >
-      <div className="mx-auto w-full max-w-[1400px] px-5 sm:px-8">
+      <div className="scrim" aria-hidden="true" />
+
+      <div className="relative mx-auto w-full max-w-[1400px] px-5 sm:px-8">
         <Reveal>
           <div className="mb-10 flex flex-col gap-6 border-b border-[var(--line)] pb-8 sm:flex-row sm:items-end sm:justify-between">
             <div className="max-w-[36rem]">
@@ -81,7 +83,7 @@ export function Archive() {
                 The rest of the shelf
               </h2>
               <p className="mt-4 text-lg leading-relaxed text-[var(--ink-muted)]">
-                Twenty-one projects so far, including the ones nobody asks to see.
+                Twenty-two projects so far, including the ones nobody asks to see.
               </p>
             </div>
 

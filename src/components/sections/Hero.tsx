@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowDown, ArrowUpRight } from "@phosphor-icons/react";
+import { ArrowUpRight } from "@phosphor-icons/react";
 import { Reveal } from "@/components/Reveal";
 import { profile } from "@/data/profile";
 
@@ -11,7 +11,13 @@ export function Hero() {
       data-scene-chapter
       className="relative flex min-h-[100dvh] items-center pt-24 pb-16 sm:pt-28"
     >
-      <div className="mx-auto w-full max-w-[1400px] px-5 sm:px-8">
+      {/* Scrim so the headline always clears the scene behind it. */}
+      <div
+        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[var(--bg)] via-[var(--bg)]/85 to-transparent lg:via-[var(--bg)]/55"
+        aria-hidden="true"
+      />
+
+      <div className="relative mx-auto w-full max-w-[1400px] px-5 sm:px-8">
         <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)]">
           <div className="max-w-[42rem]">
             <Reveal>
@@ -66,13 +72,6 @@ export function Hero() {
             </Reveal>
           </div>
         </div>
-      </div>
-
-      <div className="pointer-events-none absolute inset-x-0 bottom-6 flex justify-center">
-        <span className="flex items-center gap-2 text-sm text-[var(--ink-muted)]">
-          <ArrowDown size={15} weight="bold" />
-          The room is the tour
-        </span>
       </div>
     </section>
   );

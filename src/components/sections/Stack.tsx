@@ -17,7 +17,9 @@ export function Stack() {
       data-scene-chapter
       className="relative flex min-h-[100dvh] items-center py-24 sm:py-32"
     >
-      <div className="mx-auto w-full max-w-[1400px] px-5 sm:px-8">
+      <div className="scrim" aria-hidden="true" />
+
+      <div className="relative mx-auto w-full max-w-[1400px] px-5 sm:px-8">
         <Reveal>
           <div className="mb-14 max-w-[44rem]">
             <h2 className="text-4xl leading-[1.06] tracking-tight sm:text-5xl">

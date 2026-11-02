@@ -27,7 +27,9 @@ export function Work() {
       data-scene-chapter
       className="relative flex min-h-[100dvh] items-center py-24 sm:py-32"
     >
-      <div className="mx-auto w-full max-w-[1400px] px-5 sm:px-8">
+      <div className="scrim" aria-hidden="true" />
+
+      <div className="relative mx-auto w-full max-w-[1400px] px-5 sm:px-8">
         <Reveal>
           <div className="mb-12 max-w-[46rem]">
             <p className="eyebrow mb-5">Featured work</p>
@@ -50,39 +52,40 @@ export function Work() {
                 delay={index * 0.06}
                 className={`sm:col-span-1 ${style.span}`}
               >
-                <article className="group relative flex h-full min-h-[15rem] flex-col overflow-hidden rounded-[var(--radius-card)] border border-[var(--line)] bg-gradient-to-br p-6 transition-colors duration-300 hover:border-[var(--line-strong)] sm:p-7">
+                <article className="group relative flex h-full min-h-[15rem] flex-col overflow-hidden rounded-[var(--radius-card)] border border-[var(--line)] bg-[var(--panel)] p-6 transition-colors duration-300 hover:border-[var(--line-strong)] sm:p-7">
                   <div
-                    className={`absolute inset-0 -z-10 bg-gradient-to-br ${style.tint} opacity-70 transition-opacity duration-300 group-hover:opacity-100`}
+                    className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${style.tint} opacity-80 transition-opacity duration-300 group-hover:opacity-100`}
                     aria-hidden="true"
                   />
 
-                  <div className="flex items-start justify-between gap-4">
-                    {project.icon ? (
-                      <span className="grid size-12 place-items-center rounded-xl border border-[var(--line)] bg-[var(--bg-deep)]/60">
-                        <BrandIcon slug={project.icon} size={24} />
-                      </span>
-                    ) : (
-                      <span className="grid size-12 place-items-center rounded-xl border border-[var(--line)] bg-[var(--bg-deep)]/60 text-[var(--accent)]">
-                        <span className="font-[family-name:var(--font-mono)] text-lg font-semibold">
-                          {project.name.slice(0, 2)}
+                  <div className="relative flex flex-col">
+                    <div className="flex items-start justify-between gap-4">
+                      {project.icon ? (
+                        <span className="grid size-12 place-items-center rounded-xl border border-[var(--line)] bg-[var(--bg-deep)]/60">
+                          <BrandIcon slug={project.icon} size={24} />
                         </span>
-                      </span>
-                    )}
+                      ) : (
+                        <span className="grid size-12 place-items-center rounded-xl border border-[var(--line)] bg-[var(--bg-deep)]/60 text-[var(--accent)]">
+                          <span className="font-[family-name:var(--font-mono)] text-lg font-semibold">
+                            {project.name.slice(0, 2)}
+                          </span>
+                        </span>
+                      )}
 
-                    {project.link ? (
-                      <a
-                        href={project.link.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`${project.name} on ${project.link.label}`}
-                        className="grid size-9 place-items-center rounded-full border border-[var(--line)] text-[var(--ink-muted)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent-text)]"
-                      >
-                        <ArrowUpRight size={16} weight="bold" />
-                      </a>
-                    ) : null}
-                  </div>
+                      {project.link ? (
+                        <a
+                          href={project.link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`${project.name} on ${project.link.label}`}
+                          className="grid size-9 place-items-center rounded-full border border-[var(--line)] text-[var(--ink-muted)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent-text)]"
+                        >
+                          <ArrowUpRight size={16} weight="bold" />
+                        </a>
+                      ) : null}
+                    </div>
 
-                  <div className="mt-auto pt-8">
+                    <div className="mt-auto pt-8">
                     <h3 className="text-2xl leading-tight tracking-tight sm:text-[1.75rem]">
                       {project.name}
                     </h3>
@@ -115,6 +118,7 @@ export function Work() {
                         </li>
                       ))}
                     </ul>
+                    </div>
                   </div>
                 </article>
               </Reveal>
