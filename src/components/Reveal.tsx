@@ -61,10 +61,7 @@ export function CountUp({
   const [display, setDisplay] = useState(reduce ? value : 0);
 
   useEffect(() => {
-    if (reduce) {
-      setDisplay(value);
-      return;
-    }
+    if (reduce) return;
 
     const node = ref.current;
     if (!node) return;
@@ -101,7 +98,7 @@ export function CountUp({
 
   return (
     <span ref={ref} className={className}>
-      {display.toLocaleString("en-IN")}
+      {(reduce ? value : display).toLocaleString("en-IN")}
       {suffix}
     </span>
   );

@@ -28,10 +28,21 @@ export function Room({ palette }: { palette: RoomPalette }) {
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, size, size);
 
+    // A seeded generator instead of Math.random, so the grain is identical on
+    // every render and the texture build stays a pure function of the size.
+    let seed = 0x9e3779b9;
+    const random = () => {
+      seed = (seed + 0x6d2b79f5) | 0;
+      let t = seed;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+
     for (let i = 0; i < 2600; i += 1) {
-      const x = Math.random() * size;
-      const y = Math.random() * size;
-      const shade = 0.86 + Math.random() * 0.14;
+      const x = random() * size;
+      const y = random() * size;
+      const shade = 0.86 + random() * 0.14;
       ctx.fillStyle = `rgba(${Math.round(shade * 255)},${Math.round(shade * 255)},${Math.round(
         shade * 255,
       )},1)`;

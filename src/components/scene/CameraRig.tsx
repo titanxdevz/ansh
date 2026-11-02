@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
-import { useFrame, useThree } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
 import { useScrollProgress } from "@/lib/scroll-progress";
 
 /**
@@ -43,7 +43,6 @@ const tmpLook = new THREE.Vector3();
  * the pointer so the room feels alive when the reader stops scrolling.
  */
 export function CameraRig({ reducedMotion }: { reducedMotion: boolean }) {
-  const { camera, pointer } = useThree();
   const scrollProgress = useScrollProgress();
 
   const [chapters, setChapters] = useState<{ top: number; height: number }[]>([]);
@@ -88,7 +87,9 @@ export function CameraRig({ reducedMotion }: { reducedMotion: boolean }) {
   // The colour the clear render should sit against, matched to the page theme.
   const clearColor = useMemo(() => new THREE.Color("#0d0f16"), []);
 
-  useFrame((_, delta) => {
+  // Read the camera and pointer off the frame state: they belong to the
+  // renderer, not to this render, so they are only touched while a frame runs.
+  useFrame(({ camera, pointer }) => {
     const progress = scrollProgress.get();
 
     // Ease the raw progress so chapter edges do not feel like snapping.
