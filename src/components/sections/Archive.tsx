@@ -83,7 +83,7 @@ export function Archive() {
                 The rest of the shelf
               </h2>
               <p className="mt-4 text-lg leading-relaxed text-[var(--ink-muted)]">
-                Twenty-two projects so far, including the ones nobody asks to see.
+                Nine projects so far, the ones that earned the space.
               </p>
             </div>
 
@@ -100,7 +100,7 @@ export function Archive() {
                     type="button"
                     onClick={() => setFilter(option.id)}
                     aria-pressed={active}
-                    className={`rounded-full border px-4 py-2 text-sm transition-colors ${
+                    className={`rounded-lg border px-3.5 py-1.5 text-xs font-mono transition-colors cursor-pointer ${
                       active
                         ? "border-[var(--accent)] bg-[var(--accent-soft)] text-[var(--accent-text)]"
                         : "border-[var(--line)] text-[var(--ink-muted)] hover:border-[var(--line-strong)] hover:text-[var(--ink)]"
