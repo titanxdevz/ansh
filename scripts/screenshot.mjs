@@ -7,13 +7,14 @@
 import { chromium } from "playwright";
 import { mkdir } from "node:fs/promises";
 
-const URL = process.env.SITE_URL ?? "http://localhost:3001";
+const URL = process.env.SITE_URL ?? "http://localhost:3000";
 const OUT = "screenshots";
 
 const chapters = [
   { name: "01-hero", selector: "#top" },
   { name: "02-about", selector: "#about" },
   { name: "03-work", selector: "#work" },
+  { name: "03b-architecture", selector: "#architecture" },
   { name: "04-archive", selector: "#archive" },
   { name: "05-stack", selector: "#stack" },
   { name: "06-services", selector: "#services" },

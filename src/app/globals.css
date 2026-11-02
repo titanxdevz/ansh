@@ -57,8 +57,8 @@
   --color-on-accent: var(--on-accent);
   --color-accent-soft: var(--accent-soft);
 
-  --radius-card: 14px;
-  --radius-control: 999px;
+  --radius-card: 16px;
+  --radius-control: 10px;
 }
 
 @layer base {

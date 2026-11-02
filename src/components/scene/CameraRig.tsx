@@ -26,7 +26,11 @@ const STATIONS: Station[] = [
   { position: [1.35, 1.55, 1.5], target: [-0.5, 1.0, -2.2], fov: 38 },
   // Work: sweep left across the shelf.
   { position: [-0.4, 2.0, 0.9], target: [1.9, 1.85, -3.1], fov: 40 },
-  // Skills: drop down towards the server tower.
+  // Architecture: focus down into server tower & bus lines.
+  { position: [-1.8, 1.3, 1.4], target: [-2.4, 0.75, -2.5], fov: 42 },
+  // Archive: pan across the library shelf.
+  { position: [0.2, 1.8, 1.8], target: [1.2, 1.5, -2.8], fov: 40 },
+  // Stack: drop down towards the server tower LEDs.
   { position: [-1.5, 1.1, 1.1], target: [-2.6, 0.65, -2.7], fov: 44 },
   // Services: pull back around the mug and the plant.
   { position: [2.3, 1.45, 1.2], target: [1.4, 0.7, -2.4], fov: 39 },
